@@ -50,6 +50,24 @@ namespace HairStyleBookingApp.Data
                 entity.Property(e => e.EndsAt).HasColumnType("datetime");
 
                 entity.Property(e => e.StartsAt).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdClientNavigation)
+                    .WithMany(p => p.Appointments)
+                    .HasForeignKey(d => d.IdClient)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Appointments_Clients");
+
+                entity.HasOne(d => d.IdEmployeeNavigation)
+                    .WithMany(p => p.Appointments)
+                    .HasForeignKey(d => d.IdEmployee)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Appointments_Employees");
+
+                entity.HasOne(d => d.IdServiceNavigation)
+                    .WithMany(p => p.Appointments)
+                    .HasForeignKey(d => d.IdService)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Appointments_Services");
             });
 
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -143,8 +161,7 @@ namespace HairStyleBookingApp.Data
 
             modelBuilder.Entity<Client>(entity =>
             {
-                entity.HasKey(e => e.IdClient)
-                    .HasName("PK__Clients__C1961B3368ABCA07");
+                entity.HasKey(e => e.IdClient);
 
                 entity.Property(e => e.IdClient).ValueGeneratedNever();
 
@@ -215,9 +232,9 @@ namespace HairStyleBookingApp.Data
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.IdPostNavigation)
-                    .WithOne(p => p.Post)
-                    .HasForeignKey<Post>(d => d.IdPost)
+                entity.HasOne(d => d.IdEmployeeNavigation)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.IdEmployee)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Posts_Employees");
             });
