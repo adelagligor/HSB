@@ -1,4 +1,4 @@
-﻿@model HairStyleBookingApp.Models.AppointmentModel
+﻿@model HairStyleBookingApp.ViewModels.AppointmentViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,24 +13,42 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+           @* <div class="form-group">
                 <label asp-for="IdAppointment" class="control-label"></label>
                 <input asp-for="IdAppointment" class="form-control" />
                 <span asp-validation-for="IdAppointment" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="IdClient" class="control-label"></label>
-                <input asp-for="IdClient" class="form-control" />
+                <select asp-for="IdClient" class="form-select">
+                    @foreach (var client in Model.Clients)
+                    {
+                        <option value="@client.IdClient">@client.Name</option>
+                    }
+                </select>
+
                 <span asp-validation-for="IdClient" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdService" class="control-label"></label>
-                <input asp-for="IdService" class="form-control" />
+                <select asp-for="IdService" class="form-select">
+                    @foreach (var service in Model.Services)
+                    {
+                        <option value="@service.IdService">@service.ServiceName</option>
+                    }
+                </select>
+
                 <span asp-validation-for="IdService" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdEmployee" class="control-label"></label>
-                <input asp-for="IdEmployee" class="form-control" />
+                <select asp-for="IdEmployee" class="form-select">
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <option value="@employee.IdEmployee">@employee.Name</option>
+                    }
+                </select>
+
                 <span asp-validation-for="IdEmployee" class="text-danger"></span>
             </div>
             <div class="form-group">

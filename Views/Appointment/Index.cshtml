@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HairStyleBookingApp.Models.AppointmentModel>
+﻿@model IEnumerable<HairStyleBookingApp.ViewModels.AppointmentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.IdAppointment)
-            </th>
-            <th>
+            </th>*@
+           @* <th>
                 @Html.DisplayNameFor(model => model.IdClient)
             </th>
             <th>
@@ -24,12 +24,21 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdEmployee)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.StartsAt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EndsAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
             </th>
             <th></th>
         </tr>
@@ -37,7 +46,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.IdAppointment)
             </td>
             <td>
@@ -47,8 +56,8 @@
                 @Html.DisplayFor(modelItem => item.IdService)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.IdEmployee)
-            </td>
+                @Html.DisplayFor(modelItem => item.IdEmployee)
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.StartsAt)
             </td>
@@ -56,9 +65,18 @@
                 @Html.DisplayFor(modelItem => item.EndsAt)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.IdAppointment }) |
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new {id=item.IdAppointment}) |
                     @Html.ActionLink("Details", "Details", new {  id=item.IdAppointment }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdAppointment  })
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdAppointment })
             </td>
         </tr>
 }

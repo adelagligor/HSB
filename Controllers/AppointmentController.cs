@@ -1,26 +1,39 @@
 ﻿using HairStyleBookingApp.Data;
 using HairStyleBookingApp.Models;
 using HairStyleBookingApp.Repository;
+using HairStyleBookingApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HairStyleBookingApp.Controllers
 {
     public class AppointmentController : Controller
     {
         private AppointmentRepository appointmentRepository;
-        private EmployeeRepository employeeRepository;
+        
         private ServiceRepository serviceRepository;
+        private ClientRepository clientRepository;
+        private EmployeeRepository employeeRepository;
 
         public AppointmentController(ApplicationDbContext dbContext)
         {
-            appointmentRepository = new AppointmentRepository(dbContext);   
+            appointmentRepository = new AppointmentRepository(dbContext);
+            employeeRepository = new EmployeeRepository(dbContext);
+            serviceRepository = new ServiceRepository(dbContext);
+            clientRepository = new ClientRepository(dbContext);
         }
         // GET: AppointmentController
         public ActionResult Index()
         {
             var list = appointmentRepository.GetAllAppointments();
-            return View(list);
+            var viewModelList = new List<AppointmentViewModel>();
+            foreach(var appointment in list)
+            {
+                viewModelList.Add(new AppointmentViewModel(appointment, clientRepository,
+                    serviceRepository, employeeRepository));
+            }
+            return View(viewModelList);
         }
 
         // GET: AppointmentController/Details/5
@@ -33,7 +46,21 @@ namespace HairStyleBookingApp.Controllers
         // GET: AppointmentController/Create
         public ActionResult Create()
         {
-            return View("Create");
+            //var clients = clientRepository.GetAllClients();
+            //var clientList = clients.Select(x => new SelectListItem(x.Name, x.IdClient.ToString()));
+            //ViewBag.ClientList = clientList;
+
+            //var services = serviceRepository.GetAllServices();
+            //var serviceList = services.Select(x => new SelectListItem(x.ServiceName, x.IdService.ToString()));
+            //ViewBag.ServiceList = serviceList;
+
+            //var employees = employeeRepository.GetAllEmployees();
+            //var employeeList = employees.Select(x => new SelectListItem(x.Name, x.IdEmployee.ToString()));
+            //ViewBag.EmployeeList = employeeList;
+
+            //return View("Create");
+            var viewmodel = new AppointmentViewModel(new AppointmentModel(),clientRepository, serviceRepository, employeeRepository);
+            return View("Create", viewmodel);
         }
 
         // POST: AppointmentController/Create
@@ -63,7 +90,9 @@ namespace HairStyleBookingApp.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = appointmentRepository.GetAppointmentById(id);
-            return View("Edit", model);
+            var viewModelEdit = new AppointmentViewModel(model, clientRepository, serviceRepository, employeeRepository);
+            
+            return View("Edit", viewModelEdit);
         }
 
         // POST: AppointmentController/Edit/5
