@@ -5,6 +5,7 @@ using HairStyleBookingApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace HairStyleBookingApp.Controllers
 {
@@ -91,8 +92,10 @@ namespace HairStyleBookingApp.Controllers
         {
             var model = appointmentRepository.GetAppointmentById(id);
             var viewModelEdit = new AppointmentViewModel(model, clientRepository, serviceRepository, employeeRepository);
-            
+
             return View("Edit", viewModelEdit);
+
+
         }
 
         // POST: AppointmentController/Edit/5
