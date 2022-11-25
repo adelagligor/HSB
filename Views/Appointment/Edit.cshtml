@@ -5,21 +5,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Edit Appointment</h1>
 
-<h4>AppointmentModel</h4>
+<h4>@*AppointmentModel*@</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           @* <div class="form-group">
+            <div hidden class="form-group">
                 <label asp-for="IdAppointment" class="control-label"></label>
                 <input asp-for="IdAppointment" class="form-control" />
                 <span asp-validation-for="IdAppointment" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
-                <label asp-for="IdClient" class="control-label"></label>
+                <label asp-for="IdClient" class="control-label">
+                    @Html.LabelFor(m => m.ClientName)
+                </label>
                 <select asp-for="IdClient" class="form-select">
                     @foreach (var client in Model.Clients)
                     {
@@ -30,7 +32,9 @@
                 <span asp-validation-for="IdClient" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdService" class="control-label"></label>
+                <label asp-for="IdService" class="control-label">
+                    @Html.LabelFor(m => m.ServiceName)
+                </label>
                 <select asp-for="IdService" class="form-select">
                     @foreach (var service in Model.Services)
                     {
@@ -41,7 +45,9 @@
                 <span asp-validation-for="IdService" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdEmployee" class="control-label"></label>
+                <label asp-for="IdEmployee" class="control-label">
+                    @Html.LabelFor(m => m.EmployeeName)
+                </label>
                 <select asp-for="IdEmployee" class="form-select">
                     @foreach (var employee in Model.Employees)
                     {
@@ -69,7 +75,10 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+    {
+        <a asp-action="Index">Back to List</a>
+    }
 </div>
 
 @section Scripts {

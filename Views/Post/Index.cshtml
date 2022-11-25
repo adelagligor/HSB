@@ -8,7 +8,10 @@
 <h1>Read latest posts</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" asp-action="Create">Create New Post</a>
+    }
 </p>
 <table class="table">
     <thead>
@@ -50,10 +53,16 @@
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "Edit", new {  id=item.IdPost  }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.IdPost  }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdPost })
-            </td>
+                    @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.IdPost  }, new{@class="btn btn-warning"})
+                    }
+                    @Html.ActionLink("Details", "Details", new { id=item.IdPost  },new {@class="btn btn-info"})
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id=item.IdPost }, new{@class="btn btn-danger"})
+                    }
+                </td>
         </tr>
 }
     </tbody>

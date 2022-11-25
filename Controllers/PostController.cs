@@ -1,12 +1,14 @@
 ﻿using HairStyleBookingApp.Data;
 using HairStyleBookingApp.Models;
 using HairStyleBookingApp.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HairStyleBookingApp.Controllers
 {
+    
     public class PostController : Controller
     {
         private PostRepository postRepository;
@@ -32,6 +34,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: PostController/Create
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult Create()
         {
             var employees = employeeRepository.GetAllEmployees();
@@ -43,6 +46,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult Create(IFormCollection collection)
         {
             try
@@ -64,6 +68,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: PostController/Edit/5
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult Edit(Guid id)
         {
            var model= postRepository.GetPostById(id);
@@ -73,6 +78,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: PostController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
@@ -97,6 +103,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: PostController/Delete/5
+        [Authorize(Roles ="Admin")]
         public ActionResult Delete(Guid id)
         {
             var model = postRepository.GetPostById(id);

@@ -95,6 +95,7 @@ namespace HairStyleBookingApp.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = clientRepository.GetClientById(id);
+            
             return View("Delete", model);
         }
 

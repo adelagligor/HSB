@@ -2,10 +2,12 @@
 using HairStyleBookingApp.Models;
 using HairStyleBookingApp.Repository;
 using HairStyleBookingApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Data;
 
 namespace HairStyleBookingApp.Controllers
 {
@@ -25,6 +27,7 @@ namespace HairStyleBookingApp.Controllers
             clientRepository = new ClientRepository(dbContext);
         }
         // GET: AppointmentController
+        [Authorize(Roles = "Employee,Admin,User")]
         public ActionResult Index()
         {
             var list = appointmentRepository.GetAllAppointments();
@@ -40,11 +43,16 @@ namespace HairStyleBookingApp.Controllers
         // GET: AppointmentController/Details/5
         public ActionResult Details(Guid id)
         {
+            //var model = appointmentRepository.GetAppointmentById(id);
+            //return View("Details", model);
             var model = appointmentRepository.GetAppointmentById(id);
-            return View("Details", model);
+            var viewModelDetails = new AppointmentViewModel(model, clientRepository, serviceRepository, employeeRepository);
+
+            return View("Details", viewModelDetails);
         }
 
         // GET: AppointmentController/Create
+        [Authorize(Roles = "Employee,Admin,User")]
         public ActionResult Create()
         {
             //var clients = clientRepository.GetAllClients();
@@ -67,6 +75,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: AppointmentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employee,Admin,User")]
         public ActionResult Create(IFormCollection collection)
         {
             try
@@ -88,6 +97,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: AppointmentController/Edit/5
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult Edit(Guid id)
         {
             var model = appointmentRepository.GetAppointmentById(id);
@@ -101,6 +111,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: AppointmentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult Edit(Guid id, IFormCollection collection)
         {
 
@@ -126,15 +137,19 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: AppointmentController/Delete/5
+        [Authorize(Roles = "Employee,Admin,User")]
         public ActionResult Delete(Guid id)
         {
             var model = appointmentRepository.GetAppointmentById(id);
-            return View("Delete", model);
+            var viewModelDelete = new AppointmentViewModel(model, clientRepository, serviceRepository, employeeRepository);
+
+            return View("Delete", viewModelDelete);
         }
 
         // POST: AppointmentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employee,Admin,User")]
         public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try

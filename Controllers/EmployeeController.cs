@@ -1,6 +1,7 @@
 ﻿using HairStyleBookingApp.Data;
 using HairStyleBookingApp.Models;
 using HairStyleBookingApp.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: EmployeeController/Create
+        [Authorize(Roles="Admin")]
         public ActionResult Create()
         {
             return View("Create");
@@ -37,6 +39,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: EmployeeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(IFormCollection collection)
         {
             try
@@ -58,6 +61,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: EmployeeController/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(Guid id)
         {
             var model = employeeRepository.GetEmployeeById(id);
@@ -67,6 +71,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: EmployeeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
@@ -88,6 +93,7 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: EmployeeController/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(Guid id)
         {
             var model = employeeRepository.GetEmployeeById(id);
@@ -97,6 +103,7 @@ namespace HairStyleBookingApp.Controllers
         // POST: EmployeeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try

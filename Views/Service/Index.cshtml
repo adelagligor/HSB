@@ -8,14 +8,17 @@
 <h1>Services</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+    {
+        <a class="btn btn-primary" asp-action="Create">Create New Service</a>
+    }
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.IdService)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ServiceName)
             </th>
@@ -44,9 +47,17 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.IdService }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.IdService }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdService  })
+                    @if ( User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.IdService }, new{@class="btn btn-warning"})
+                    }
+                   
+                    @Html.ActionLink("Details", "Details", new { id=item.IdService },new {@class="btn btn-info"})
+                    @if ( User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id=item.IdService  }, new{@class="btn btn-danger"})
+                    }
+                    
             </td>
         </tr>
 }

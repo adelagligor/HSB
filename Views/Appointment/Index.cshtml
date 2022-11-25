@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Appointments</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class = "btn btn-primary" asp-action="Create">Create New Appointment</a>
 </p>
 <table class="table">
     <thead>
@@ -74,9 +74,9 @@
                 @Html.DisplayFor(modelItem => item.EmployeeName)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "Edit", new {id=item.IdAppointment}) |
-                    @Html.ActionLink("Details", "Details", new {  id=item.IdAppointment }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdAppointment })
+                    @Html.ActionLink("Edit", "Edit", new {id=item.IdAppointment}, new{@class="btn btn-warning"}) 
+                    @Html.ActionLink("Details", "Details", new {  id=item.IdAppointment }, new {@class="btn btn-info"}) 
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdAppointment }, new{@class="btn btn-danger"})
             </td>
         </tr>
 }
