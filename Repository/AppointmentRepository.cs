@@ -52,7 +52,7 @@ namespace HairStyleBookingApp.Repository
         public List<AppointmentModel> GetAllAppointments()
         {
             var list = new List<AppointmentModel>();
-            foreach (var dbobject in _DBContext.Appointments)   //citim din _DBContext lista de Announcements; itereaza peste toate dbobjects care sunt in Appointments
+            foreach (var dbobject in _DBContext.Appointments)   //citim din _DBContext lista de Appointments; itereaza peste toate dbobjects care sunt in Appointments
             {
                 list.Add(MapDBObjectToModel(dbobject)); //avem dbobjects, pe care le convertim in Modele iar apoi le punem in lista
             }
@@ -62,7 +62,7 @@ namespace HairStyleBookingApp.Repository
         {
             return MapDBObjectToModel(_DBContext.Appointments.FirstOrDefault(x => x.IdAppointment == id));
             //pe colectia Appointments aplic LambdaExpression FirstorDefault(nu pun datatype pentru ca o sa-l deduca implicit) si expresia
-            //Lambda expressionul cauta in toata lista de Appointments pana cand gaseste dbobject care are proprietarea de Idannouncement egala cu id-ul pe care l-am dat ca parametru
+            //Lambda expression cauta in toata lista de Appointments pana cand gaseste dbobject care are proprietarea de Idannouncement egala cu id-ul pe care l-am dat ca parametru
             //returneaza dbobjectul respectiv sau default care e nul si-l da la MapDBObjectToModel care il mapeaza si il converteste in model si merge la return si astfel functia returneaza modelul
         }
 

@@ -43,8 +43,7 @@ namespace HairStyleBookingApp.Controllers
         // GET: AppointmentController/Details/5
         public ActionResult Details(Guid id)
         {
-            //var model = appointmentRepository.GetAppointmentById(id);
-            //return View("Details", model);
+
             var model = appointmentRepository.GetAppointmentById(id);
             var viewModelDetails = new AppointmentViewModel(model, clientRepository, serviceRepository, employeeRepository);
 
