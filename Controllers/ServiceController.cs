@@ -22,9 +22,10 @@ namespace HairStyleBookingApp.Controllers
         }
 
         // GET: ServiceController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var model = serviceRepository.GetServiceById(id);
+            return View("Details", model);
         }
 
         // GET: ServiceController/Create

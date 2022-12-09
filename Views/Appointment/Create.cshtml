@@ -79,7 +79,7 @@
 
 <div>
     
-    @if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("User"))
+    @if (User.IsInRole("Employee") || User.IsInRole("Admin") @*|| User.IsInRole("User")*@)
     {
     <a class="btn btn-success" asp-action="Index">Back to Appointments List</a>
     }
