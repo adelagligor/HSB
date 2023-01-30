@@ -48,8 +48,11 @@ namespace HairStyleBookingApp.Controllers
                 if (task.Result)
                 {
                     clientRepository.InsertClient(model);
+                    TempData["success"] = "Client created sucessfully";
 
                 }
+
+                
                 return RedirectToAction("Index");
             }
             catch
@@ -78,6 +81,7 @@ namespace HairStyleBookingApp.Controllers
                 if (task.Result)
                 {
                     clientRepository.UpdateClient(model);
+                    TempData["success"] = "Client updated sucessfully";
                     return RedirectToAction(nameof(Index));
                 }
                 else
@@ -107,6 +111,7 @@ namespace HairStyleBookingApp.Controllers
             try
             {
                 clientRepository.DeleteClient(id);
+                TempData["success"] = "Client deleted sucessfully";
                 return RedirectToAction(nameof(Index));
             }
             catch

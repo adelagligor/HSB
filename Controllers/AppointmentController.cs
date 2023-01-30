@@ -36,6 +36,7 @@ namespace HairStyleBookingApp.Controllers
             {
                 viewModelList.Add(new AppointmentViewModel(appointment, clientRepository,
                     serviceRepository, employeeRepository));
+
             }
             return View(viewModelList);
         }

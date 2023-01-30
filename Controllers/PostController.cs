@@ -49,22 +49,24 @@ namespace HairStyleBookingApp.Controllers
         [Authorize(Roles = "Employee,Admin")]
         public ActionResult Create(IFormCollection collection)
         {
-            try
-            {
-                var model = new PostModel();
-                var task = TryUpdateModelAsync(model);
-                task.Wait();
-                if (task.Result)
+            
+                try
                 {
-                    postRepository.InsertPost(model);
+                    var model = new PostModel();
+                    var task = TryUpdateModelAsync(model);
+                    task.Wait();
+                    if (task.Result)
+                    {
+                        postRepository.InsertPost(model);
 
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return RedirectToAction("Create");
-            }
+                catch
+                {
+                    return RedirectToAction("Create");
+                }
+           
         }
 
         // GET: PostController/Edit/5
